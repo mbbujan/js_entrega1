@@ -1,11 +1,23 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+body {
+  font-family: "Cinzel", serif;
+  font-family: "Montserrat", sans-serif;
+  font-family: "Raleway", sans-serif;
+  font-family: "Solitreo", cursive;
+  padding: 20%;
+  h1 {
+    text-align: center;
+
   }
-  
-  #comprar-boton {
-    margin-top: 20px;
-    width: 90%;
-    height: 35px;
+
+  main {
+    .temas {
+      color: grey;
+      margin-left: 60px;
+    }
   }
+  footer {
+    p {
+      font-size: 20px;
+    }
+  }
+}
