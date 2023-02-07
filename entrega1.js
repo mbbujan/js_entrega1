@@ -89,6 +89,7 @@ function ingresar(usuarios) {
     );
   } while (!datosLoggeo.accesoCorrecto(logUsuario, logPass));
   datosLoggeo.saludoInicial();
+  datosLoggeo.saludoFinal();
 }
 
 function salir() {
