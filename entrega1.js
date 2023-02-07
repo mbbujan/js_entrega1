@@ -39,26 +39,85 @@ function chequeoVacio(texto, mensaje) {
   return textoNuevo;
 }
 
-let nombre = prompt("Tu nombre: ");
-nombre = chequeoVacio(nombre, "No se permiten textos vacios! Ingresa tu nombre: ");
-let nombreUsuario = prompt("Alta nombre de usuario: ");
-nombreUsuario = chequeoVacio(
-  nombreUsuario,
-  "No se permiten textos vacios! Ingresa tu nombre de usuario: "
+function alta(usuarios) {
+  let nombre = prompt("Tu nombre: ");
+  nombre = chequeoVacio(
+    nombre,
+    "No se permiten textos vacios! Ingresa tu nombre: "
+  );
+  let nombreUsuario = prompt("Alta nombre de usuario: ");
+  nombreUsuario = chequeoVacio(
+    nombreUsuario,
+    "No se permiten textos vacios! Ingresa tu nombre de usuario: "
+  );
+
+  let pass = prompt("Alta contraseña: ");
+  pass = chequeoVacio(
+    pass,
+    "No se permiten textos vacios! Ingresa tu contraseña: "
+  );
+
+  const altaUsuario = new Usuario(nombre, nombreUsuario, pass);
+
+  let duplicado = usuarios.some(
+    (altaUsuario) => altaUsuario.usuario === nombreUsuario
+  );
+
+  while (duplicado) {
+    nombreUsuario = prompt(
+      "El nombre de usuario ya existe, intentá con otro: "
+    );
+    duplicado = usuarios.some(
+      (altaUsuario) => altaUsuario.usuario === nombreUsuario
+    );
+  }
+  altaUsuario.usuario = nombreUsuario;
+  console.log(altaUsuario);
+  usuarios.push(altaUsuario);
+}
+
+function ingresar(usuarios) {
+  alert("Vamos a logearnos :)");
+  let logUsuario;
+  let logPass;
+  let datosLoggeo;
+  do {
+    logUsuario = prompt("Tu nombre de usuario: ");
+    logPass = prompt("Tu contraseña: ");
+    datosLoggeo = usuarios.find(
+      (altaUsuario) => altaUsuario.usuario === logUsuario
+    );
+  } while (!datosLoggeo.accesoCorrecto(logUsuario, logPass));
+  datosLoggeo.saludoInicial();
+}
+
+function salir() {
+  alert("Adios");
+}
+//   PROGRAMA PRINCIPAL
+const usuario1 = new Usuario("nombre 1", "usuario1", "testPass1");
+const usuario2 = new Usuario("nombre 2", "usuario2", "testPass2");
+let usuarios = [usuario1, usuario2];
+
+usuarios.forEach((usuario)=>{
+  console.log(usuario);
+});
+
+let opcion = parseInt(
+  prompt("Menú opciones: \n 1. Alta usuario \n 2. Ingresar \n 3. Salir")
 );
-let pass = prompt("Alta contraseña: ");
-pass = chequeoVacio(pass, "No se permiten textos vacios! Ingresa tu contraseña: ");
-
-const altaUsuario = new Usuario(nombre, nombreUsuario, pass);
-
-altaUsuario.saludoInicial();
-console.log(altaUsuario.usuario);
-console.log(altaUsuario.pass);
-alert("Vamos a logearnos con los datos que ingresaste en el alta :)");
-let logUsuario;
-let logPass;
-do {
-  logUsuario = prompt("Tu nombre de usuario: ");
-  logPass = prompt("Tu contraseña: ");
-} while (!altaUsuario.accesoCorrecto(logUsuario, logPass));
-altaUsuario.saludoFinal();
+switch (opcion) {
+  case 1:
+    alta(usuarios);
+    ingresar(usuarios);
+    break;
+  case 2:
+    ingresar(usuarios);
+    break;
+  case 3:
+    salir();
+    break;
+  default:
+    alert("Opción invalida");
+    break;
+}
